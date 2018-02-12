@@ -15,17 +15,17 @@ export default new Router({
       component: AppMain
     },
     {
-      path: '/search',
+      path: '/search/:id',
       name: 'AppSearch',
       component: AppSearch
     },
     {
-      path: '/login',
+      path: '/signin',
       name: 'AppLogin',
       component: AppLogin
     },
     {
-      path: '/register',
+      path: '/signup',
       name: 'AppRegister',
       component: AppRegister
     }

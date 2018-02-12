@@ -6,7 +6,11 @@ import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
+import ItemCard from './components/global/ItemCard.vue'
+
 Vue.use(Vuetify)
+
+Vue.component('item-card', ItemCard)
 
 Vue.config.productionTip = false
 
