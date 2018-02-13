@@ -17,11 +17,11 @@
         icon>
         <v-icon>search</v-icon>
       </v-btn>
-      <v-btn to="/signup"
+      <v-btn to="/signin"
         icon>
         <v-icon>lock_open</v-icon>
       </v-btn>
-      <v-btn to="/signin"
+      <v-btn to="/signup"
         icon>
         <v-icon>person_add</v-icon>
       </v-btn>
