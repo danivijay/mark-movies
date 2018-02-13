@@ -1,18 +1,22 @@
 <template>
-  <v-card color="purple" class="white--text">
+  <v-card color="purple" class="white--text mt-2">
     <v-container fluid grid-list-lg>
       <v-layout row>
         <v-flex xs7>
           <div>
-            <div class="headline">Halycon Days</div>
-            <div>Ellie Goulding</div>
+            <div class="headline">{{ title }}</div>
+            <div>{{ releaseDate }}</div>
           </div>
             <v-btn
+            v-if="!movieInStore"
+            @click="removeFromCollection"
             right
             top>
               <v-icon left>remove_circle</v-icon>Remove
             </v-btn>
             <v-btn
+            v-if="movieInStore"
+            @click="addToCollection"
             right
             top>
               <v-icon left>add_circle</v-icon>Add
@@ -20,7 +24,7 @@
         </v-flex>
         <v-flex xs5>
             <v-card-media
-              src="https://pbs.twimg.com/profile_images/875996174305472512/upM71pVR.jpg"
+              :src="'https://image.tmdb.org/t/p/w500/' + imgUrl"
               height="125px"
               contain
             ></v-card-media>
@@ -32,7 +36,31 @@
 
 <script>
 export default {
-
+  name: 'ItemCard',
+  props: ['id', 'title', 'imgUrl', 'releaseDate'],
+  methods: {
+    addToCollection () {
+      const movieInfo = {
+        id: this.id,
+        title: this.title,
+        imgUrl: this.imgUrl,
+        releaseDate: this.releaseDate
+      }
+      this.$store.dispatch('addToCollection', movieInfo)
+    },
+    removeFromCollection () {
+      this.$store.dispatch('removeFromCollection', this.id)
+    }
+  },
+  computed: {
+    movieInStore () {
+      const MovieCollection = this.$store.getters.getMovieCollection
+      return MovieCollection.map(movie => {
+        console.log(movie.id, this.id)
+        return movie.id === this.id
+      })
+    }
+  }
 }
 </script>
 
