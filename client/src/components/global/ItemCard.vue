@@ -8,14 +8,14 @@
             <div>{{ releaseDate }}</div>
           </div>
             <v-btn
-            v-if="!movieInStore"
+            v-if="$store.getters.getIdCollection.includes(id)"
             @click="removeFromCollection"
             right
             top>
               <v-icon left>remove_circle</v-icon>Remove
             </v-btn>
             <v-btn
-            v-if="movieInStore"
+            v-if="!$store.getters.getIdCollection.includes(id)"
             @click="addToCollection"
             right
             top>
@@ -53,13 +53,7 @@ export default {
     }
   },
   computed: {
-    movieInStore () {
-      const MovieCollection = this.$store.getters.getMovieCollection
-      return MovieCollection.map(movie => {
-        console.log(movie.id, this.id)
-        return movie.id === this.id
-      })
-    }
+
   }
 }
 </script>

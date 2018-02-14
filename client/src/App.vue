@@ -4,19 +4,7 @@
       app
     >
       <router-link to="/" tag="v-toolbar-title" v-if="!showSearch" style="cursor: pointer;">{{ title }}</router-link>
-      <v-spacer v-if="!showSearch"></v-spacer>
-      <v-text-field
-        v-if="showSearch"
-        v-model="searchVal"
-        label="Search Movie"
-        @keyup.enter="onSearch"
-      >
-      </v-text-field>
-      <v-btn
-        @click="showSearch = !showSearch"
-        icon>
-        <v-icon>search</v-icon>
-      </v-btn>
+      <v-spacer></v-spacer>
       <v-btn to="/signin"
         icon>
         <v-icon>lock_open</v-icon>
@@ -45,14 +33,7 @@ export default {
   data () {
     return {
       title: 'Mark Movies',
-      showSearch: false,
       searchVal: ''
-    }
-  },
-  methods: {
-    onSearch () {
-      this.$router.push(`/search/${this.searchVal}`)
-      console.log(this.searchVal)
     }
   }
 }

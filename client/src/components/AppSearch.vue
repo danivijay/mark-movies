@@ -1,6 +1,16 @@
 <template>
   <v-container>
     <v-layout>
+      <v-flex xs12 sm8 md6 offset-sm2 offset-md3 class="text-xs-right">
+        <v-btn
+          to="/"
+          exact
+          fab
+          ><v-icon>arrow_back</v-icon>
+        </v-btn>
+      </v-flex>
+    </v-layout>
+    <v-layout>
       <v-flex xs12 sm8 md6 offset-sm2 offset-md3>
         <h2>Searched for {{ $route.params.id }} ({{ searchRes.total_results }} results)</h2>
         <item-card
