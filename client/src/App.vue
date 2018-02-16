@@ -3,7 +3,7 @@
     <v-toolbar
       app
     >
-      <router-link to="/" tag="v-toolbar-title" v-if="!showSearch" style="cursor: pointer;">{{ title }}</router-link>
+      <router-link to="/" tag="v-toolbar-title" style="cursor: pointer;">{{ title }}</router-link>
       <v-spacer></v-spacer>
       <v-btn to="/signin"
         icon>
