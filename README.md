@@ -1,5 +1,5 @@
 # Mark Movies
-Movie Bookmarking App
+Movie Collection Organizer, with Vue, Express and mySQL
 
 ## Stack
 * VueJS
