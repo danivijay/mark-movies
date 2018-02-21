@@ -1,0 +1,27 @@
+{
+  "name": "mark-movies-api",
+  "version": "1.0.0",
+  "description": "mark-movies api",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js --exec babel-node",
+    "build": "babel lib -d dist",
+    "serve": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express",
+    "node",
+    "api"
+  ],
+  "author": "Dani Vijay",
+  "license": "GPL-2.0",
+  "dependencies": {
+    "express": "4.16.2"
+  },
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-stage-2": "6.24.1"
+  }
+}
