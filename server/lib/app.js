@@ -6,8 +6,9 @@ import cors from 'cors'
 import morgan from 'morgan'
 
 app.use(morgan('combined'))
-app.use(bodyParser.json())
 app.use(cors())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
 
 import movieRoutes from './api/routes/movies'
 
