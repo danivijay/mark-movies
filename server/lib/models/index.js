@@ -30,4 +30,4 @@ Object.keys(db).forEach(function (modelName) {
 db.sequelize = sequelize
 db.Sequelize = sequelize
 
-module.exports = db
+export default db
