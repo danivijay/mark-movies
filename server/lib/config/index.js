@@ -5,7 +5,7 @@ export default {
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASS || '',
     options: {
-      dialect: process.env.DIALECT || 'mysql2',
+      dialect: process.env.DIALECT || 'mysql',
       host: process.env.HOST || 'localhost',
       operatorsAliases: false
     }

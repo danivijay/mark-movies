@@ -1,22 +1,6 @@
 import express from 'express'
 const app = express()
 
-const Sequelize = require('sequelize')
-const sequelize = new Sequelize('mark-movies', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql',
-  operatorsAliases: false,
-});
-
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
-
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import morgan from 'morgan'
