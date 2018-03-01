@@ -8,17 +8,19 @@ import models from '../../models'
 
 router.post('/signup', (req, res, next) => {
   if (!req.body.email) {
-    console.log('email missing')
-    return false
+    const err = new Error('Email required')
+    err.status = 400
+    next(err)
   }
   if (!req.body.password) {
-    console.log('password missing')
-    return false
+    const err = new Error('Password required')
+    err.status = 400
+    next(err)
   } else {
       bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
         if (err) {
-          console.log('hashing failed')
-          return false
+          const err = new Error('Processing failed')
+          next(err)
         }
         const userinfo = {
           email: req.body.email,
@@ -27,13 +29,12 @@ router.post('/signup', (req, res, next) => {
         models.User.create(userinfo)
           .then(user => {
             res.status(200).json({
-              msg : 'signup success',
-              user : user.toJSON()
+              msg : 'signup success'
             })
-            res.send()
+            console.log('New User: ', user)
           })
           .catch(err => {
-            console.log(err)
+            next(err)
           })
       })
   }
