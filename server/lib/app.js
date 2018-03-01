@@ -11,8 +11,10 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
 import movieRoutes from './api/routes/movies'
+import userRoutes from './api/routes/user'
 
 app.use('/movies', movieRoutes)
+app.use('/user', userRoutes)
 
 app.use((req, res, next) => {
   const err = new Error('not found')
