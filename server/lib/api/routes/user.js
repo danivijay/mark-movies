@@ -31,7 +31,7 @@ router.post('/signup', (req, res, next) => {
             res.status(200).json({
               msg : 'signup success'
             })
-            console.log('New User: ', user)
+            console.log('New User: ', user.dataValues)
           })
           .catch(err => {
             next(err)
