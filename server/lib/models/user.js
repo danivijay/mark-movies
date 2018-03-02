@@ -11,6 +11,11 @@ export default (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    active: {
+      type: DataTypes.STRING,
+      allowNull: false, 
+      defaultValue: true 
     }
   })
 

@@ -44,7 +44,7 @@ router.post('/signin', (req, res, next) => {
       return jwt.sign({
           email,
           userId : verified.userId
-        }, config.authentication.jwtSecret, { expiresIn: '1h' })
+        }, config.authentication.jwtSecret, { expiresIn: '24h' })
     } else {
       const err = new Error('Authentication failed')
       err.status = 400
