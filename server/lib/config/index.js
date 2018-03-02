@@ -11,6 +11,6 @@ export default {
     }
   },
   authentication: {
-    jwtSecret: process.env.JWT_SECRET || 'secret'
+    jwtSecret: process.env.JWT_SECRET || 'secret1'
   }
 }
