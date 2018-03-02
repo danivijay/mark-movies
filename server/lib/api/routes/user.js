@@ -31,11 +31,19 @@ router.post('/signin', (req, res, next) => {
       err.status = 400
       next(err)
     } 
-    return bcrypt.compare(req.body.password, user.dataValues.password)
-  }).then(res => {
-    if (res) {
+    const isAuthenticated = bcrypt.compare(req.body.password, user.dataValues.password)
+    const userId = user.dataValues.id
+    console.log('1', user.dataValues.id)
+    return {
+      isAuthenticated, 
+      userId
+    }
+  }).then(verified => {
+    console.log('2', verified.userId)
+    if (verified.isAuthenticated) {
       return jwt.sign({
-          email
+          email,
+          userId : verified.userId
         }, config.authentication.jwtSecret, { expiresIn: '1h' })
     } else {
       const err = new Error('Authentication failed')
