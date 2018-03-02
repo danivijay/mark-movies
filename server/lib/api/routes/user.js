@@ -4,10 +4,10 @@ const router = express.Router()
 import bcrypt from 'bcrypt'
 const saltRounds = 10;
 
-var jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken'
 
-import models from '../../models'
-import config from '../../config'
+import db from '../models'
+import config from '../config'
 
 router.post('/signin', (req, res, next) => {
   if (!req.body.email) {
@@ -21,7 +21,7 @@ router.post('/signin', (req, res, next) => {
     err.status = 400
     next(err)
   }
-  models.User.findOne({
+  db.User.findOne({
     where: {
       email
     }
@@ -80,7 +80,7 @@ router.post('/signup', (req, res, next) => {
           email: req.body.email,
           password: hash
         }
-        models.User.create(userinfo)
+        db.User.create(userinfo)
           .then(user => {
             res.status(200).json({
               msg : 'Signup success'
