@@ -45,9 +45,26 @@ router.post('/', checkAuth, (req, res, next) => {
     })
 })
 
-router.delete('/:movieId', (req, res, next) => {
-  res.status(200).json({
-    msg : 'delete movies'
+router.delete('/:movieId', checkAuth, (req, res, next) => {
+  if(!req.params.movieId) {
+    const err = new Error('No movies found')
+    err.status = 400
+    next(err)
+  }
+  const MovieId = req.params.movieId
+  const UserId = req.userData.userId
+  db.Movie.destroy({
+    where: {
+      id: MovieId,
+      UserId
+    }
+  }).then(data => {
+    console.log(data)
+    res.status(200).json({
+      msg: 'Deleted movie'
+    })
+  }).catch(err => {
+    next(err)
   })
 })
 
