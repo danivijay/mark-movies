@@ -4,6 +4,34 @@ const router = express.Router()
 import checkAuth from '../policies/check-auth'
 import db from '../models'
 
+router.delete('/:movieId', checkAuth, (req, res, next) => {
+  if(!req.params.movieId) {
+    const err = new Error('No movies found')
+    err.status = 400
+    next(err)
+  }
+  const MovieId = req.params.movieId
+  const UserId = req.userData.userId
+  db.Movie.destroy({
+    where: {
+      id: MovieId,
+      UserId
+    }
+  }).then(data => {
+    console.log(data)
+    if(!data) {
+      const err = new Error('No movies found')
+      err.status = 400
+      next(err)
+    }
+    res.status(200).json({
+      msg: 'Deleted movie'
+    })
+  }).catch(err => {
+    next(err)
+  })
+})
+
 router.get('/', checkAuth, (req, res, next) => {
   const UserId = req.userData.userId
   db.Movie.findAll({
@@ -43,29 +71,6 @@ router.post('/', checkAuth, (req, res, next) => {
     }).catch(err => {
       next(err)
     })
-})
-
-router.delete('/:movieId', checkAuth, (req, res, next) => {
-  if(!req.params.movieId) {
-    const err = new Error('No movies found')
-    err.status = 400
-    next(err)
-  }
-  const MovieId = req.params.movieId
-  const UserId = req.userData.userId
-  db.Movie.destroy({
-    where: {
-      id: MovieId,
-      UserId
-    }
-  }).then(data => {
-    console.log(data)
-    res.status(200).json({
-      msg: 'Deleted movie'
-    })
-  }).catch(err => {
-    next(err)
-  })
 })
 
 export default router
