@@ -76,7 +76,11 @@ export default {
   methods: {
     onSubmit () {
       if (this.$refs.form.validate()) {
-        console.log('valid')
+        const user = {
+          email: this.email,
+          password: this.password
+        }
+        this.$store.dispatch('userSignUp', user)
       }
     }
   }

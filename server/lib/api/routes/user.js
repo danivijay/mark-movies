@@ -61,6 +61,7 @@ router.post('/signin', (req, res, next) => {
 })
 
 router.post('/signup', (req, res, next) => {
+  console.log(req.body)  
   if (!req.body.email) {
     const err = new Error('Email required')
     err.status = 400

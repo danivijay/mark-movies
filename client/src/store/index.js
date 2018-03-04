@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-
-// TODO
-// import Api from '@/services/Api'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -41,6 +39,14 @@ export const store = new Vuex.Store({
     removeFromCollection ({commit, getters}, payload) {
       const id = payload
       commit('removeFromCollection', id)
+    },
+    userSignUp ({commit, getters}, payload) {
+      getters.Api.post(`user/signup`, {
+        email: payload.email,
+        password: payload.password
+      }).then(res => {
+        console.log(res)
+      })
     }
   },
   getters: {
@@ -52,6 +58,17 @@ export const store = new Vuex.Store({
     },
     getIsUserLoggedIn (state) {
       return state.isUserLoggedIn
+    },
+    Api (state) {
+      const params = {
+        baseURL: `http://localhost:3000`
+      }
+      if (state.token) {
+        params.headers = {
+          Authorization: `Bearer ${state.token}`
+        }
+      }
+      return axios.create(params)
     }
   }
 })
