@@ -9,7 +9,6 @@ export const store = new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     token: null,
-    user: null,
     isUserLoggedIn: false,
     movieCollection: [],
     idCollection: []
@@ -31,13 +30,30 @@ export const store = new Vuex.Store({
         state.idCollection.splice(index, 1)
       }
     },
-    addToken (state, payload) {
+    userSignIn (state, payload) {
       state.token = payload
+      state.isUserLoggedIn = true
+    },
+    userSignOut (state, payload) {
+      state.token = null
+      state.isUserLoggedIn = false
+      state.movieCollection = []
+      state.idCollection = []
     }
   },
   actions: {
     addToCollection ({commit, getters}, payload) {
-      commit('addToCollection', payload)
+      console.log(payload)
+      getters.Api.post(`movies`, {
+        movieId: payload.id,
+        title: payload.title,
+        imgUrl: payload.imgUrl,
+        releaseDate: payload.releaseDate
+      }).then(res => {
+        commit('addToCollection', payload)
+      }).catch(err => {
+        console.log(err)
+      })
     },
     removeFromCollection ({commit, getters}, payload) {
       const id = payload
@@ -47,8 +63,6 @@ export const store = new Vuex.Store({
       getters.Api.post(`user/signup`, {
         email: payload.email,
         password: payload.password
-      }).then(res => {
-        console.log(res)
       }).catch(err => {
         console.log(err)
       })
@@ -58,10 +72,13 @@ export const store = new Vuex.Store({
         email: payload.email,
         password: payload.password
       }).then(res => {
-        commit('addToken', res.data.token)
+        commit('userSignIn', res.data.token)
       }).catch(err => {
         console.log(err)
       })
+    },
+    userSignOut ({commit}) {
+      commit('userSignOut')
     }
   },
   getters: {

@@ -35,18 +35,18 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                  to="/signin"
-                  flat
-                  >
-                  Already registered?
-                </v-btn>
-                <v-btn
-                @click="onSubmit"
-                >
-                  Register
-                </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn
+              to="/signin"
+              flat
+              >
+              Already registered?
+            </v-btn>
+            <v-btn
+            @click="onSubmit"
+            >
+              Register
+            </v-btn>
           </v-card-actions>
       </v-card>
       </v-flex>
@@ -79,21 +79,27 @@ export default {
     }
   },
   methods: {
+    setErr (val, msg) {
+      this.error = val
+      this.errorMsg = msg
+    },
     onSubmit () {
-      this.error = false
-      this.errorMsg = ''
+      this.setErr(false, '')
       if (this.$refs.form.validate()) {
         const user = {
           email: this.email,
           password: this.password
         }
         this.$store.dispatch('userSignUp', user)
-          .then(() => {
+          .then((res) => {
+            if (res.status !== 'success') {
+              this.setErr(true, 'Oops! Registration failed. Please check your network connection.')
+              return false
+            }
             this.$router.push('/signin')
           }).catch(err => {
             console.log(err)
-            this.error = true
-            this.errorMsg = 'Oops! Registration failed. Please check your network connection.'
+            this.setErr(true, 'Oops! Registration failed. Please check your network connection.')
           })
       }
     }

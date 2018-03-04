@@ -65,19 +65,23 @@ export default {
     }
   },
   methods: {
+    setErr (val, msg) {
+      this.error = val
+      this.errorMsg = msg
+    },
     onSubmit () {
+      this.setErr(false, '')
       if (this.$refs.form.validate()) {
         const user = {
           email: this.email,
           password: this.password
         }
         this.$store.dispatch('userSignIn', user)
-          .then(() => {
+          .then((res) => {
             this.$router.push('/')
           }).catch(err => {
             console.log(err)
-            this.error = true
-            this.errorMsg = 'Oops! Login failed. Please check your network connection.'
+            this.setErr(true, 'Oops! Registration failed. Please check your network connection.')
           })
       }
     }

@@ -14,6 +14,7 @@
         <v-icon>person_add</v-icon>
       </v-btn>
       <v-btn
+        @click="onSignOut"
         icon>
         <v-icon>exit_to_app</v-icon>
       </v-btn>
@@ -34,6 +35,11 @@ export default {
     return {
       title: 'Mark Movies',
       searchVal: ''
+    }
+  },
+  methods: {
+    onSignOut () {
+      this.$store.dispatch('userSignOut')
     }
   }
 }
