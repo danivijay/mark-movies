@@ -10,6 +10,9 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
+    token: null,
+    user: null,
+    isUserLoggedIn: false,
     movieCollection: [],
     idCollection: []
   },
@@ -46,6 +49,9 @@ export const store = new Vuex.Store({
     },
     getIdCollection (state) {
       return state.idCollection.sort((a, b) => a > b)
+    },
+    getIsUserLoggedIn (state) {
+      return state.isUserLoggedIn
     }
   }
 })
