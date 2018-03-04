@@ -29,21 +29,24 @@
                 :rules="[confirmPasswordRules]"
                 required
               ></v-text-field>
+              <v-alert color="error" icon="warning" dismissible v-model="error">
+                {{ errorMsg }}
+              </v-alert>
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-              to="/signin"
-              flat
-              >
-              Already registered?
-            </v-btn>
-            <v-btn
-            @click="onSubmit"
-            >
-              Register
-            </v-btn>
+                <v-spacer></v-spacer>
+                <v-btn
+                  to="/signin"
+                  flat
+                  >
+                  Already registered?
+                </v-btn>
+                <v-btn
+                @click="onSubmit"
+                >
+                  Register
+                </v-btn>
           </v-card-actions>
       </v-card>
       </v-flex>
@@ -58,6 +61,8 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
+      error: false,
+      errorMsg: '',
       emailRules: [
         v => !!v || 'E-mail is required',
         v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
@@ -75,12 +80,21 @@ export default {
   },
   methods: {
     onSubmit () {
+      this.error = false
+      this.errorMsg = ''
       if (this.$refs.form.validate()) {
         const user = {
           email: this.email,
           password: this.password
         }
         this.$store.dispatch('userSignUp', user)
+          .then(() => {
+            this.$router.push('/signin')
+          }).catch(err => {
+            console.log(err)
+            this.error = true
+            this.errorMsg = 'Oops! Registration failed. Please check your network connection.'
+          })
       }
     }
   }

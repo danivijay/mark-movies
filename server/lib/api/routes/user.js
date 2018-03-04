@@ -33,13 +33,11 @@ router.post('/signin', (req, res, next) => {
     } 
     const isAuthenticated = bcrypt.compare(req.body.password, user.dataValues.password)
     const userId = user.dataValues.id
-    console.log('1', user.dataValues.id)
     return {
       isAuthenticated, 
       userId
     }
   }).then(verified => {
-    console.log('2', verified.userId)
     if (verified.isAuthenticated) {
       return jwt.sign({
           email,
@@ -61,7 +59,6 @@ router.post('/signin', (req, res, next) => {
 })
 
 router.post('/signup', (req, res, next) => {
-  console.log(req.body)  
   if (!req.body.email) {
     const err = new Error('Email required')
     err.status = 400

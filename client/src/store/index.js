@@ -30,6 +30,9 @@ export const store = new Vuex.Store({
       if (index > -1) {
         state.idCollection.splice(index, 1)
       }
+    },
+    addToken (state, payload) {
+      state.token = payload
     }
   },
   actions: {
@@ -46,6 +49,18 @@ export const store = new Vuex.Store({
         password: payload.password
       }).then(res => {
         console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    userSignIn ({commit, getters}, payload) {
+      getters.Api.post(`user/signin`, {
+        email: payload.email,
+        password: payload.password
+      }).then(res => {
+        commit('addToken', res.data.token)
+      }).catch(err => {
+        console.log(err)
       })
     }
   },
