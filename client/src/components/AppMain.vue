@@ -18,7 +18,7 @@
           </v-card-actions>
         </v-card>
         <item-card
-          v-for="movie in movieCollection" :key="movie.id"
+          v-for="(movie, index) in movieCollection" :key="index"
           :id="movie.id"
           :title="movie.title"
           :imgUrl="movie.imgUrl"
@@ -46,6 +46,13 @@ export default {
     onSearch () {
       this.$router.push(`/search/${this.searchVal}`)
       console.log(this.searchVal)
+    }
+  },
+  created () {
+    if (!this.$store.getters.getIsUserLoggedIn) {
+      this.$router.push('/signin')
+    } else {
+      this.$store.dispatch('loadCollection')
     }
   }
 }

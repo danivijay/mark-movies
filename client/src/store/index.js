@@ -14,6 +14,19 @@ export const store = new Vuex.Store({
     idCollection: []
   },
   mutations: {
+    loadCollection (state, payload) {
+      for (let movie of payload) {
+        if (!state.idCollection.includes(movie.id)) {
+          state.idCollection.push(movie.id)
+          state.movieCollection.push({
+            id: movie.id,
+            title: movie.title,
+            imgUrl: movie.imgUrl,
+            releaseDate: movie.releaseDate
+          })
+        }
+      }
+    },
     addToCollection (state, payload) {
       const id = payload.id
       if (state.idCollection.includes(id)) {
@@ -42,22 +55,35 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    loadCollection ({commit, getters}) {
+      getters.Api.get(`movies`).then(res => {
+        return commit('loadCollection', res.data.movies)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     addToCollection ({commit, getters}, payload) {
-      console.log(payload)
       getters.Api.post(`movies`, {
         movieId: payload.id,
         title: payload.title,
         imgUrl: payload.imgUrl,
         releaseDate: payload.releaseDate
       }).then(res => {
-        commit('addToCollection', payload)
+        return commit('addToCollection', payload)
       }).catch(err => {
         console.log(err)
       })
     },
     removeFromCollection ({commit, getters}, payload) {
       const id = payload
-      commit('removeFromCollection', id)
+      getters.Api.delete(`movies/${id}`, {
+        email: payload.email,
+        password: payload.password
+      }).then(() => {
+        return commit('removeFromCollection', id)
+      }).catch(err => {
+        console.log(err)
+      })
     },
     userSignUp ({commit, getters}, payload) {
       getters.Api.post(`user/signup`, {
@@ -72,7 +98,7 @@ export const store = new Vuex.Store({
         email: payload.email,
         password: payload.password
       }).then(res => {
-        commit('userSignIn', res.data.token)
+        return commit('userSignIn', res.data.token)
       }).catch(err => {
         console.log(err)
       })
