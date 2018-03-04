@@ -1,9 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
+
+// TODO
+// import Api from '@/services/Api'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
     movieCollection: [],
     idCollection: []
