@@ -40,6 +40,11 @@ export default {
   methods: {
     onSignOut () {
       this.$store.dispatch('userSignOut')
+        .then(() => {
+          this.$router.push('/')
+        }).catch(err => {
+          console.log(err)
+        })
     }
   }
 }

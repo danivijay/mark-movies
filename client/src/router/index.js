@@ -5,6 +5,8 @@ import AppSearch from '@/components/AppSearch'
 import AppLogin from '@/components/AppLogin'
 import AppRegister from '@/components/AppRegister'
 
+import AuthGuard from './auth-guard'
+
 Vue.use(Router)
 
 export default new Router({
@@ -12,12 +14,14 @@ export default new Router({
     {
       path: '/',
       name: 'AppMain',
-      component: AppMain
+      component: AppMain,
+      beforeEnter: AuthGuard
     },
     {
       path: '/search/:id',
       name: 'AppSearch',
-      component: AppSearch
+      component: AppSearch,
+      beforeEnter: AuthGuard
     },
     {
       path: '/signin',
