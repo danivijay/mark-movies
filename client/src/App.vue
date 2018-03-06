@@ -6,14 +6,17 @@
       <router-link to="/" tag="v-toolbar-title" style="cursor: pointer;">{{ title }}</router-link>
       <v-spacer></v-spacer>
       <v-btn to="/signin"
+        v-if="!isUserLoggedIn"
         icon>
         <v-icon>lock_open</v-icon>
       </v-btn>
       <v-btn to="/signup"
+        v-if="!isUserLoggedIn"
         icon>
         <v-icon>person_add</v-icon>
       </v-btn>
       <v-btn
+        v-if="isUserLoggedIn"
         @click="onSignOut"
         icon>
         <v-icon>exit_to_app</v-icon>
@@ -45,6 +48,11 @@ export default {
         }).catch(err => {
           console.log(err)
         })
+    }
+  },
+  computed: {
+    isUserLoggedIn () {
+      return this.$store.getters.getIsUserLoggedIn
     }
   }
 }
