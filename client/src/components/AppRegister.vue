@@ -92,7 +92,7 @@ export default {
         }
         this.$store.dispatch('userSignUp', user)
           .then((res) => {
-            if (res.status !== 'success') {
+            if (!res) {
               this.setErr(true, 'Oops! Registration failed. Please check your network connection.')
               return false
             }

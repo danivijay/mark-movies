@@ -48,11 +48,9 @@ export default {
       console.log(this.searchVal)
     }
   },
-  created () {
+  mounted () {
     if (!this.$store.getters.getIsUserLoggedIn) {
-      this.$router.push('/signin')
-    } else {
-      this.$store.dispatch('loadCollection')
+      this.$router.push('/')
     }
   }
 }

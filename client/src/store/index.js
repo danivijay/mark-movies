@@ -29,11 +29,13 @@ export const store = new Vuex.Store({
     },
     addToCollection (state, payload) {
       const id = payload.id
+      console.log(id)
       if (state.idCollection.includes(id)) {
         return false
       }
       state.movieCollection.push(payload)
       state.idCollection.push(payload.id)
+      return true
     },
     removeFromCollection (state, payload) {
       const id = payload
@@ -56,27 +58,35 @@ export const store = new Vuex.Store({
   },
   actions: {
     loadCollection ({commit, getters}) {
-      getters.Api.get(`movies`).then(res => {
+      return getters.Api.get(`movies`).then(res => {
         return commit('loadCollection', res.data.movies)
+      }).then(() => {
+        console.log('here in action')
+        return true
       }).catch(err => {
+        console.log('here in action err')
         console.log(err)
+        return false
       })
     },
     addToCollection ({commit, getters}, payload) {
-      getters.Api.post(`movies`, {
+      return getters.Api.post(`movies`, {
         movieId: payload.id,
         title: payload.title,
         imgUrl: payload.imgUrl,
         releaseDate: payload.releaseDate
       }).then(res => {
         return commit('addToCollection', payload)
+      }).then(() => {
+        return true
       }).catch(err => {
         console.log(err)
+        return false
       })
     },
     removeFromCollection ({commit, getters}, payload) {
       const id = payload
-      getters.Api.delete(`movies/${id}`, {
+      return getters.Api.delete(`movies/${id}`, {
         email: payload.email,
         password: payload.password
       }).then(() => {
@@ -86,21 +96,27 @@ export const store = new Vuex.Store({
       })
     },
     userSignUp ({commit, getters}, payload) {
-      getters.Api.post(`user/signup`, {
+      return getters.Api.post(`user/signup`, {
         email: payload.email,
         password: payload.password
+      }).then(() => {
+        return true
       }).catch(err => {
         console.log(err)
+        return false
       })
     },
     userSignIn ({commit, getters}, payload) {
-      getters.Api.post(`user/signin`, {
+      return getters.Api.post(`user/signin`, {
         email: payload.email,
         password: payload.password
       }).then(res => {
         return commit('userSignIn', res.data.token)
+      }).then(() => {
+        return true
       }).catch(err => {
-        console.log(err)
+        console.log('ho', err)
+        return false
       })
     },
     userSignOut ({commit}) {

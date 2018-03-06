@@ -77,12 +77,37 @@ export default {
           password: this.password
         }
         this.$store.dispatch('userSignIn', user)
-          .then(() => {
-            this.$router.push('/')
+          .then((res) => {
+            console.log('heree1', res)
+            if (res) {
+              return this.$store.dispatch('loadCollection')
+            }
+            console.log('heree2')
+            this.setErr(true, 'Oops! Signin failed. Please check your network connection.')
+            return false
+          }).then((res) => {
+            console.log('heree2', res)
+            if (res) {
+              this.$router.push('/')
+            }
+            this.setErr(true, 'Oops! Signin failed. Please check your network connection.')
           }).catch(err => {
             console.log(err)
-            this.setErr(true, 'Oops! Registration failed. Please check your network connection.')
+            this.setErr(true, 'Oops! Signin failed. Please check your network connection.')
           })
+      }
+    }
+  },
+  computed: {
+    isUserLoggedIn () {
+      return this.$store.getters.getIsUserLoggedIn
+    }
+  },
+  watch: {
+    isUserLoggedIn () {
+      console.log(this.isUserLoggedIn)
+      if (this.isUserLoggedIn) {
+        this.$router.push('/')
       }
     }
   }

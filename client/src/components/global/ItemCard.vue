@@ -51,9 +51,6 @@ export default {
     removeFromCollection () {
       this.$store.dispatch('removeFromCollection', this.id)
     }
-  },
-  computed: {
-
   }
 }
 </script>
